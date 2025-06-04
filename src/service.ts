@@ -1,5 +1,6 @@
 // src/server.ts
 import express, { Request, Response } from 'express';
+import cors from 'cors';
 import { randomUUID } from 'node:crypto';
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
@@ -119,6 +120,7 @@ const getServerInstance = () => {
 
 // --- Express App Setup ---
 const app = express();
+app.use(cors({ exposedHeaders: 'mcp-session-id' })); // Enabled CORS for all origins and exposed mcp-session-id
 app.use(express.json()); // Middleware to parse JSON bodies
 
 const PORT = process.env.PORT || 8000; // Use port 8000 for the MCP server
